@@ -1,0 +1,199 @@
+{
+	"info": {
+		"_postman_id": "c1f8d4a9-7e5c-4b6a-9f1c-7e5c4b6a9f1c",
+		"name": "Secure Dynamic Config API",
+		"description": "Postman collection to test the new MongoDB-backed Admin configuration API endpoints.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Upsert Razorpay Public Key ID (Plaintext)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": \"RAZORPAY_KEY_ID\",\n    \"value\": \"rzp_test_1234567890\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:80/api/setting/upsert",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "80",
+					"path": ["api", "setting", "upsert"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Upsert Razorpay Secret (Encrypted)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": \"RAZORPAY_SECRET\",\n    \"value\": \"secret_abcdefghijklmnopqrstuvwxyz\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:80/api/setting/upsert",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "80",
+					"path": ["api", "setting", "upsert"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Upsert ZegoCloud App ID",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": \"ZEGOCLOUD_APP_ID\",\n    \"value\": \"123456789\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:80/api/setting/upsert",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "80",
+					"path": ["api", "setting", "upsert"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Upsert Invalid System Key (Should Block)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": \"JWT_SECRET\",\n    \"value\": \"hacker_trying_to_change_secret\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:80/api/setting/upsert",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "80",
+					"path": ["api", "setting", "upsert"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Get All Settings (Admin View)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:80/api/setting/keys",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "80",
+					"path": ["api", "setting", "keys"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Test Dynamic Razorpay Instantiation",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:80/api/setting/test-razorpay-init",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "80",
+					"path": ["api", "setting", "test-razorpay-init"]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "jwt_token",
+			"value": "PASTE_YOUR_ADMIN_TOKEN_HERE"
+		}
+	]
+}
